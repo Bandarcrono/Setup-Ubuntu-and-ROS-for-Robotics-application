@@ -1,5 +1,3 @@
-# Setup-Ubuntu-and-ROS-for-Robotics-application
-
 # Dual Boot Windows 11/10 & Ubuntu 22.04 LTS for ROS2 Humble
 
 This guide provides a step-by-step process to dual boot Windows 11/10 with Ubuntu 22.04 LTS and then install ROS2 Humble. This setup is crucial for various robotics projects.
