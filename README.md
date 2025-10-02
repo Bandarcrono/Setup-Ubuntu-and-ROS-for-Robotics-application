@@ -48,25 +48,47 @@ If you are new to ROS, Articulated Robotics also offers an excellent introductor
 
 The version of ROS2 to be installed is Humble. Refer to the official documentation for detailed instructions: [https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html)
 
-Open a terminal in Ubuntu (Ctrl + Alt + T) and execute the following commands:
+Open a terminal in Ubuntu (Ctrl + Alt + T) and follow these individual steps:
 
+#### Step 1: Add Universe Repository and Install Prerequisites
 ```bash
-# Add ROS2 GPG key
 sudo apt install software-properties-common
 sudo add-apt-repository universe
+```
 
-# Add ROS2 repository
+#### Step 2: Install curl and Update Package List
+```bash
 sudo apt update && sudo apt install curl -y
-export ROS_APT_SOURCE_VERSION=$(curl -s [https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest](https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest) | grep -F "tag_name" | awk -F\" '{print $4}')
-curl -L -o /tmp/ros2-apt-source.deb "[https://github.com/ros-infrastructure/ros-apt-source/releases/download/$](https://github.com/ros-infrastructure/ros-apt-source/releases/download/$){ROS_APT_SOURCE_VERSION}/ros2-apt-source_${ROS_APT_SOURCE_VERSION}.$(. /etc/os-release && echo ${UBUNTU_CODENAME:-${VERSION_CODENAME}})_all.deb"
-sudo dpkg -i /tmp/ros2-apt-source.deb
+```
 
-# Update package list and upgrade
+#### Step 3: Add ROS2 GPG Key and Repository
+Get the latest ROS2 apt source version:
+```bash
+export ROS_APT_SOURCE_VERSION=$(curl -s https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest | grep -F "tag_name" | awk -F\" '{print $4}')
+```
+
+Download the ROS2 apt source package:
+```bash
+curl -L -o /tmp/ros2-apt-source.deb "https://github.com/ros-infrastructure/ros-apt-source/releases/download/${ROS_APT_SOURCE_VERSION}/ros2-apt-source_${ROS_APT_SOURCE_VERSION}.$(. /etc/os-release && echo ${UBUNTU_CODENAME:-${VERSION_CODENAME}})_all.deb"
+```
+
+Install the ROS2 apt source:
+```bash
+sudo dpkg -i /tmp/ros2-apt-source.deb
+```
+
+#### Step 4: Update Package List and Upgrade System
+```bash
 sudo apt update
 sudo apt upgrade
+```
 
-# Install ROS2 Humble Desktop
+#### Step 5: Install ROS2 Humble Desktop
+```bash
 sudo apt install ros-humble-desktop
+```
 
-# Install development tools
+#### Step 6: Install Development Tools
+```bash
 sudo apt install ros-dev-tools
+```
