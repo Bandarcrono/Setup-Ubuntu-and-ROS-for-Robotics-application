@@ -116,5 +116,6 @@ Open a second terminal and run:
 ```bash
 source /opt/ros/humble/setup.bash
 ros2 run demo_nodes_py listener
+'''
 
 If both nodes are running successfully, you should see the talker publishing messages and the listener receiving them. This confirms that ROS2 is properly installed and different programming languages can communicate through ROS2 topics.
