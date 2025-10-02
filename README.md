@@ -90,3 +90,31 @@ sudo apt install ros-humble-desktop
 ```bash
 sudo apt install ros-dev-tools
 ```
+
+#### Step 7: Test ROS2 Installation
+After completing the installation, test ROS2 with a simple talker-listener example to verify everything is working correctly.
+
+First, source the ROS2 setup file:
+```bash
+source /opt/ros/humble/setup.bash
+```
+
+**Note:** Try some examples to verify your installation.
+
+**Talker-Listener Demo:**
+This is the most simple representation where different programming files like Python or C++ can communicate with each other to make more complex interactions for robotics projects.
+
+**Terminal 1 - Run C++ Talker:**
+Open a terminal and run:
+```bash
+source /opt/ros/humble/setup.bash
+ros2 run demo_nodes_cpp talker
+```
+
+**Terminal 2 - Run Python Listener:**
+Open a second terminal and run:
+```bash
+source /opt/ros/humble/setup.bash
+ros2 run demo_nodes_py listener
+
+If both nodes are running successfully, you should see the talker publishing messages and the listener receiving them. This confirms that ROS2 is properly installed and different programming languages can communicate through ROS2 topics.
