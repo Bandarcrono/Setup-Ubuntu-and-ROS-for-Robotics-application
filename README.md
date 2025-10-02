@@ -1,1 +1,72 @@
 # Setup-Ubuntu-and-ROS-for-Robotics-application
+
+# Dual Boot Windows 11/10 & Ubuntu 22.04 LTS for ROS2 Humble
+
+This guide provides a step-by-step process to dual boot Windows 11/10 with Ubuntu 22.04 LTS and then install ROS2 Humble. This setup is crucial for various robotics projects.
+
+**Important Advice:** If you do not have an NVIDIA graphics card in your laptop or desktop, you may encounter problems controlling simulations and post-processing in different robotics projects.
+
+## Requirements
+
+* **Operating System:** Windows 11 or 10.
+* **USB Drive:** 8GB+ USB drive to flash the Ubuntu distribution.
+* **Free Space:** 50GB+ of free space on your SSD or HDD.
+
+## Dual Boot Setup: Windows & Ubuntu
+
+Follow the comprehensive guide in this video for the Windows configuration steps:
+[How to Dual Boot Windows 11 and Ubuntu in 2025 (Step by Step)](https://youtu.be/MPMnizrPvHE?si=mFPrKJ1Zas_9DEb7) by Crown GEEK.
+
+### Steps for Ubuntu Installation:
+
+1.  **Download Ubuntu Desktop 22.04 LTS:**
+    * Download the `.iso` file from the official releases page: [https://releases.ubuntu.com/22.04/](https://releases.ubuntu.com/22.04/?_ga=2.149898549.2084151835.1707729318-1126754318.1683186906&_gl=1*abt9uh*_gcl_au*MzY1MDI4NzAyLjE3NTU4MTE0NTQ.)
+    * Ensure you download the **image desktop version**.
+
+2.  **Install Rufus:**
+    * Download Rufus from its official website: [https://rufus.ie/en/](https://rufus.ie/en/)
+
+3.  **Prepare for Installation:**
+    * **Disable Secure Boot:** Before proceeding with the hard steps, you need to disable Secure Boot from your PC's BIOS settings [00:00:33]. The video provides guidance on how to access and disable it [00:00:50].
+    * **Create Partitions:** You will need to create a new partition for Ubuntu. The video demonstrates how to shrink your existing Windows partition to create unallocated space and then format it for Ubuntu [00:01:46].
+    * **Create Bootable USB:** Use Rufus to create a bootable USB drive with the downloaded Ubuntu ISO [00:02:54].
+
+4.  **Install Ubuntu:**
+    * After connecting the bootable USB drive, configure it as a flash drive.
+    * Boot from the USB drive and select your prepared partition to install Ubuntu [00:05:09].
+    * Follow the on-screen instructions to complete the Ubuntu installation.
+
+## ROS2 Humble Setup in Dual Boot Ubuntu
+
+Once Ubuntu is successfully installed, follow this tutorial to set up ROS2:
+[How to install ROS | Getting Ready to Build Robots with ROS #3](https://youtu.be/uWzOk0nkTcI?si=SQINbyTudW75mUYY) by Articulated Robotics.
+
+If you are new to ROS, Articulated Robotics also offers an excellent introductory playlist to understand the basics of this robotics operating system:
+[ROS Complete Guide Playlist](https://youtube.com/playlist?list=PLunhqkrRNRhYYCaSTVP-qJnyUPkTxJnBt&si=GXRbBpOZUJB1KvFU)
+
+### Installing ROS2 Humble
+
+The version of ROS2 to be installed is Humble. Refer to the official documentation for detailed instructions: [https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html)
+
+Open a terminal in Ubuntu (Ctrl + Alt + T) and execute the following commands:
+
+```bash
+# Add ROS2 GPG key
+sudo apt install software-properties-common
+sudo add-apt-repository universe
+
+# Add ROS2 repository
+sudo apt update && sudo apt install curl -y
+export ROS_APT_SOURCE_VERSION=$(curl -s [https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest](https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest) | grep -F "tag_name" | awk -F\" '{print $4}')
+curl -L -o /tmp/ros2-apt-source.deb "[https://github.com/ros-infrastructure/ros-apt-source/releases/download/$](https://github.com/ros-infrastructure/ros-apt-source/releases/download/$){ROS_APT_SOURCE_VERSION}/ros2-apt-source_${ROS_APT_SOURCE_VERSION}.$(. /etc/os-release && echo ${UBUNTU_CODENAME:-${VERSION_CODENAME}})_all.deb"
+sudo dpkg -i /tmp/ros2-apt-source.deb
+
+# Update package list and upgrade
+sudo apt update
+sudo apt upgrade
+
+# Install ROS2 Humble Desktop
+sudo apt install ros-humble-desktop
+
+# Install development tools
+sudo apt install ros-dev-tools
